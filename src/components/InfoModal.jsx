@@ -1,26 +1,32 @@
 import styled from "styled-components";
+import { useContext } from "react";
+import { IpContext } from "../context/context";
 
 const InfoModal = () => {
+  const value = useContext(IpContext);
+  const [data, setData] = value.ipDataInfo;
+  const { ip, city, region, postal, org, timezone } = data;
+
   return (
     <InfoContainer>
       <IpInfo>
         <p>Ip Address</p>
-        <h2>192.168.2.1</h2>
+        <h2>{ip}</h2>
       </IpInfo>
       <Divider></Divider>
       <LocInfo>
         <p>Location</p>
-        <h2>Brooklyn, New York, 10001</h2>
+        <h2>{city + "," + region + "," + postal}</h2>
       </LocInfo>
       <Divider></Divider>
       <TimeZoneInfo>
         <p>Timezone</p>
-        <h2>UTC-05:00</h2>
+        <h2>{timezone}</h2>
       </TimeZoneInfo>
       <Divider></Divider>
       <ISPInfo>
         <p>ISP</p>
-        <h2>SpaceX Starlink</h2>
+        <h2>{org}</h2>
       </ISPInfo>
     </InfoContainer>
   );
@@ -34,7 +40,7 @@ const InfoContainer = styled.div`
   z-index: 1;
   position: absolute;
   top: 170px;
-  left: 230px;
+  left: 250px;
   padding: 1rem 2rem;
   border-radius: 10px;
   background: #fff;
@@ -47,6 +53,10 @@ const InfoContainer = styled.div`
     font-size: 12px;
     letter-spacing: 1px;
     text-transform: uppercase;
+  }
+
+  h2 {
+    font-size: 18px;
   }
 `;
 

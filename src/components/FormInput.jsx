@@ -1,10 +1,34 @@
+import axios from "axios";
 import styled from "styled-components";
+import { useContext } from "react";
+import { IpContext } from "../context/context";
 
 const FormInput = () => {
+  const value = useContext(IpContext);
+  const [ip, setIp] = value.ipInfo;
+  const [data, setData] = value.ipDataInfo;
+
+  const handleChange = (e) => {
+    setIp(e.target.value);
+  };
+
+  const handleClick = (e) => {
+    e.preventDefault();
+    axios
+      .get(`https://ipapi.co/${ip}/json/`)
+      .then((res) => setData(res.data))
+      .catch((err) => console.log(err));
+    setIp("");
+  };
+
   return (
     <InputContainer>
-      <Input placeholder="Search for any IP address or domain" />
-      <Button></Button>
+      <Input
+        placeholder="Search for any IP address or domain"
+        value={ip}
+        onChange={handleChange}
+      />
+      <Button onClick={handleClick}></Button>
     </InputContainer>
   );
 };
